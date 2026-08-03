@@ -1,4 +1,3 @@
-
 from sqlalchemy import (Column, Integer, String, Text,
                         Enum, TIMESTAMP, Float, ForeignKey, JSON)
 from sqlalchemy.orm import relationship
@@ -10,15 +9,13 @@ class Document(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
 
- 
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    # Adding index=True for fast user document list lookups
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
 
     filename = Column(String(255), nullable=False)
 
-   
     content = Column(Text, nullable=False)
 
-   
     status = Column(
         Enum("pending", "processing", "done", "failed"),
         default="pending",
@@ -27,8 +24,7 @@ class Document(Base):
 
     created_at = Column(TIMESTAMP, server_default=func.now())
 
-   
-    analysis_result = relationship("AnalysisResult", back_populates="document", uselist=False)
+    analysis_result = relationship("AnalysisResult", back_populates="document", uselist=False, cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Document id={self.id} filename={self.filename} status={self.status}>"
@@ -39,13 +35,10 @@ class AnalysisResult(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    
-    document_id = Column(Integer, ForeignKey("documents.id", ondelete="CASCADE"), nullable=False, unique=True)
+    document_id = Column(Integer, ForeignKey("documents.id", ondelete="CASCADE"), nullable=False, unique=True, index=True)
 
-    
     summary = Column(Text, nullable=True)
 
-    
     keywords = Column(JSON, nullable=True)
 
     sentiment = Column(String(20), nullable=True)      

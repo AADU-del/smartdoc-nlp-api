@@ -1,0 +1,3 @@
+Researchers at Johns Hopkins University in Baltimore have developed an innovative artificial intelligence framework capable of detecting early-stage lung cancer from radiological scans. The breakthrough algorithm achieved an impressive 98.2% diagnostic accuracy rate during clinical trials conducted in Maryland and California.
+
+Dr. Elena Rostova, director of medical imaging research, stated that the algorithm analyzes subtle cellular patterns far faster than traditional manual review methods. The World Health Organization commended the research team for creating an efficient, low-cost diagnostic tool that could save thousands of lives annually across developing nations.
